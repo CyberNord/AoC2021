@@ -1,7 +1,5 @@
 /src/cybernord/aoc2021/Extensions.kt
 /out/
-/.idea/.gitignore
+/.idea/
 /AoC21.iml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/vcs.xml
+
