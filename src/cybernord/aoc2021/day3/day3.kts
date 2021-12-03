@@ -136,6 +136,4 @@ fun solveProblem2() {
 
     print("CO2 = $carbondioxideInt \nO2 = $oxygenInt\n --> Solution for 1.Star = ")
     println(carbondioxideInt*oxygenInt)
-
-
 }
