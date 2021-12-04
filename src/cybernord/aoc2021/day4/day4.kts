@@ -29,14 +29,14 @@ repeat(allSheet.size){
 
 var numIdx = 0
 var found = false
-while(numIdx < nums.size && !found){
+while(numIdx < nums.size && !found){            // will stop immeadiatly if a winner has been found
     val currNum = nums[numIdx]
     for(sheets in 0 until data.size){
         for(lines in 0 until data[sheets].size){
             for(values in 0 until data[sheets][lines].size){
                 if(data[sheets][lines][values] == currNum){
                     gameSheets[sheets][lines][values] = true
-                    if(checkWin(sheets,lines,values,currNum)){
+                    if(checkWin(sheets,lines,values,currNum)){          // will check only the current row & collumn for winner
                         found = true
                     }
                     break
