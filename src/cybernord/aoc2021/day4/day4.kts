@@ -66,7 +66,6 @@ fun checkWin(sheets: Int, lines: Int, values: Int, currNum: Int): Boolean {
             if (!gameSheets[sheets][index][values]) {
                 win = false
             }
-            sum += data[sheets][index][values]
         }
     }
 
@@ -83,7 +82,7 @@ fun checkWin(sheets: Int, lines: Int, values: Int, currNum: Int): Boolean {
         println(System.currentTimeMillis() - start)
         return true
     }
-    return win
+    return false
 }
 
 
