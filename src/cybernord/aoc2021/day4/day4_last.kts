@@ -24,13 +24,14 @@ val gameSheets = ArrayList<Array<Array<Boolean>>>()
 repeat(allSheet.size){
     gameSheets.add(Array(5) {Array(5) {false} })
 }
+
 var boardsWon = Array(allSheet.size){false}
 var numIdx = 0
 var solution = arrayOf(0,0,0)
 while(numIdx < nums.size){
     val currNum = nums[numIdx]
     for(sheets in 0 until data.size){
-        if(!boardsWon[sheets]) {
+        if(!boardsWon[sheets]) {                        // will skip every board that lost already
             for (lines in 0 until data[sheets].size) {
                 for (values in 0 until data[sheets][lines].size) {
                     if (data[sheets][lines][values] == currNum) {
@@ -63,7 +64,7 @@ fun checkWin(sheets: Int, lines: Int, values: Int, currNum: Int): Array<Int>? {
         }
     }
 
-    if (!win) {
+    if (!win) {                 // not sure about corner case (two winners with one number) 
         win = true
         // check row
         sum = 0
