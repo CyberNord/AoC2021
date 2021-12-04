@@ -3,25 +3,87 @@ package cybernord.aoc2021.day4
 import cybernord.aoc2021.*
 
 // The problem-file
-var content = "./test.txt".readSections()
+//var content = "./test.txt".readSections()
+var content = "./input.txt".readSections()
+
+val start = System.currentTimeMillis()
 
 val nums = content.first().split(',').map { i -> i.toInt() }
-val sheets = (content.subList(1,content.size).map { i -> arrayOf(i) })
-var data = ArrayList<ArrayList<Int>>()
+val allSheet = (content.subList(1,content.size).map { i -> arrayOf(i) })
+var data = ArrayList<Array<Array<Int>>>()
 
-for(lines in sheets){
+// dunno I can't do it better
+for(lines in allSheet){
     for(str in lines){
-        var x = str.splitLine().map{ i -> i.split(" ").filter { j -> j != "" } }
-
-
-
-//        data.add(x)
-
-        println("$x ")
+      data.add(str.splitLine().map{ i -> i.split(" ").filter { j -> j != "" }.map { it.toInt() }.toTypedArray() }.toTypedArray())
     }
 }
 
 
+val gameSheets = ArrayList<Array<Array<Boolean>>>()
+repeat(allSheet.size){
+    gameSheets.add(Array(5) {Array(5) {false} })
+}
 
 
-println("done")
+
+var numIdx = 0
+var found = false
+while(numIdx < nums.size && !found){
+    val currNum = nums[numIdx]
+    for(sheets in 0 until data.size){
+        for(lines in 0 until data[sheets].size){
+            for(values in 0 until data[sheets][lines].size){
+                if(data[sheets][lines][values] == currNum){
+                    gameSheets[sheets][lines][values] = true
+                    if(checkWin(sheets,lines,values,currNum)){
+                        found = true
+                    }
+                    break
+                }
+            }
+        }
+    }
+    numIdx++
+}
+
+
+fun checkWin(sheets: Int, lines: Int, values: Int, currNum: Int): Boolean {
+    var win = true
+    var sum = 0
+    // check line
+    for (index in 0 until gameSheets[sheets][lines].size) {
+        if (!gameSheets[sheets][lines][index]) {
+            win = false
+        }
+    }
+
+    if (!win) {
+        win = true
+        // check row
+        sum = 0
+        for (index in 0 until gameSheets[sheets].size) {
+            if (!gameSheets[sheets][index][values]) {
+                win = false
+            }
+            sum += data[sheets][index][values]
+        }
+    }
+
+    if(win) {
+        for (i in 0 until gameSheets[sheets].size) {
+            for (j in 0 until gameSheets[sheets][i].size) {
+                if (!gameSheets[sheets][i][j]) {
+                    sum += data[sheets][i][j]
+                }
+            }
+        }
+        print("Winner found at grid: $sheets with Number $currNum Sum is $sum ==> ")
+        println(sum * currNum)
+        println(System.currentTimeMillis() - start)
+        return true
+    }
+    return win
+}
+
+
