@@ -4,9 +4,9 @@ import cybernord.aoc2021.*
 
 // The problem-file
 //var content = "./test.txt".readSections()
-var content = "./input.txt".readSections()
-
 val start = System.currentTimeMillis()
+
+var content = "./input.txt".readSections()
 
 val nums = content.first().split(',').map { i -> i.toInt() }
 val allSheet = (content.subList(1,content.size).map { i -> arrayOf(i) })
@@ -79,10 +79,15 @@ fun checkWin(sheets: Int, lines: Int, values: Int, currNum: Int): Boolean {
         }
         print("Winner found at grid: $sheets with Number $currNum Sum is $sum ==> ")
         println(sum * currNum)
-        println(System.currentTimeMillis() - start)
+        print(System.currentTimeMillis() - start)
+        print(" milliseconds\n")
         return true
     }
     return false
 }
 
+/*
+Winner found at grid: 79 with Number 46 Sum is 640 ==> 29440
+22 milliseconds
+ */
 
