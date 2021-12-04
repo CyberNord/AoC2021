@@ -1,4 +1,4 @@
-package cybernord.aoc2021.day4_last
+package cybernord.aoc2021.day4
 
 import cybernord.aoc2021.*
 
