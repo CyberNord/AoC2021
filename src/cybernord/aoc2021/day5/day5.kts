@@ -5,6 +5,8 @@ import cybernord.aoc2021.remove
 import cybernord.aoc2021.splitTwo
 import kotlin.math.max
 
+val start = System.currentTimeMillis()
+
 //var content = "./test.txt".readLines()
 var content = "./input.txt".readLines()
 
@@ -42,7 +44,6 @@ val cordMap = content.map{it.splitTwo("->")}
 
 val fieldSize = findMaxPoint(cordMap)+1
 var field = Array(fieldSize) {Array(fieldSize) {0} }
-var arrMax = Int.MIN_VALUE
 
 
 // Mark visited fields
@@ -59,11 +60,9 @@ for(c in cordMap){
         }
         while (!fromP.comparePoint(toP)){
             field[fromP.x][fromP.y] +=1
-            arrMax = max(arrMax,field[fromP.x][fromP.y])
             fromP.incY()
         }
         field[fromP.x][fromP.y] +=1
-        arrMax = max(arrMax,field[fromP.x][fromP.y])
     }else if(c.compY()) {
         var fromP: Point
         var toP: Point
@@ -76,11 +75,9 @@ for(c in cordMap){
         }
         while (!fromP.comparePoint(toP)) {
             field[fromP.x][fromP.y] += 1
-            arrMax = max(arrMax,field[fromP.x][fromP.y])
             fromP.incX()
         }
         field[fromP.x][fromP.y] +=1
-        arrMax = max(arrMax,field[fromP.x][fromP.y])
     }
 }
 var overlaps = 0
@@ -88,12 +85,13 @@ var overlaps = 0
 // its rotated but it's okay
 for (i in field){
     for (j in i){
-        print("$j ")
-        if(j == arrMax){
+//        print("$j ")
+        if(j > 1){
             overlaps++
         }
     }
     println()
 }
 
-print("\nNumber of points where at least two lines overlap are $overlaps")
+print("\nNumber of points where at least two lines overlap are $overlaps\nTime used for calculation (in ms): ")
+print(System.currentTimeMillis() - start)
