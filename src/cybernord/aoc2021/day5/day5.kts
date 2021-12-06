@@ -5,8 +5,8 @@ import cybernord.aoc2021.remove
 import cybernord.aoc2021.splitTwo
 import kotlin.math.max
 
-var content = "./test.txt".readLines()
-//var content = "./input.txt".readLines()
+//var content = "./test.txt".readLines()
+var content = "./input.txt".readLines()
 
 class Point(var x: Int, var y: Int){
     fun increase() {
@@ -16,7 +16,7 @@ class Point(var x: Int, var y: Int){
     fun incY() { y++ }
     fun incX() { x++ }
     fun comparePoint(p: Point): Boolean{
-        return x < p.x || y < p.y
+        return x == p.x && y == p.y
     }
 }
 class Cord(val from: Point, val to: Point){
@@ -42,35 +42,58 @@ val cordMap = content.map{it.splitTwo("->")}
 
 val fieldSize = findMaxPoint(cordMap)+1
 var field = Array(fieldSize) {Array(fieldSize) {0} }
+var arrMax = Int.MIN_VALUE
 
-
-// TODO build Field
 
 // Mark visited fields
 for(c in cordMap){
     if (c.compX()){
-        val fromP = c.from
-        val toP = c.to
-        while (fromP.comparePoint(toP)){
-            field[fromP.x][fromP.y] +=1
-            fromP.incY()
+        var fromP: Point
+        var toP: Point
+        if(c.from.y < c.to.y){
+            fromP = c.from
+            toP = c.to
+        }else{
+            toP = c.from
+            fromP = c.to
         }
+        while (!fromP.comparePoint(toP)){
+            field[fromP.x][fromP.y] +=1
+            arrMax = max(arrMax,field[fromP.x][fromP.y])
+            fromP.incY()
+
+        }
+        field[fromP.x][fromP.y] +=1
     }else if(c.compY()) {
-        val fromP = c.from
-        val toP = c.to
-        while (fromP.comparePoint(toP)) {
+        var fromP: Point
+        var toP: Point
+        if(c.from.x < c.to.x){
+            fromP = c.from
+            toP = c.to
+        }else{
+            toP = c.from
+            fromP = c.to
+        }
+        while (!fromP.comparePoint(toP)) {
             field[fromP.x][fromP.y] += 1
+            arrMax = max(arrMax,field[fromP.x][fromP.y])
             fromP.incX()
         }
+        field[fromP.x][fromP.y] +=1
     }
 }
-// not quite
+var overlaps = 0
+
+// its rotated but it's okay
 for (i in field){
     for (j in i){
-        print("[$j]")
+        print("$j ")
+        if(j == arrMax){
+            overlaps++
+        }
     }
     println()
 }
 
 // tired --> resuming tomorrow
-print("break")
+print("\nNumber of points where at least two lines overlap are $overlaps")
