@@ -61,9 +61,9 @@ for(c in cordMap){
             field[fromP.x][fromP.y] +=1
             arrMax = max(arrMax,field[fromP.x][fromP.y])
             fromP.incY()
-
         }
         field[fromP.x][fromP.y] +=1
+        arrMax = max(arrMax,field[fromP.x][fromP.y])
     }else if(c.compY()) {
         var fromP: Point
         var toP: Point
@@ -80,6 +80,7 @@ for(c in cordMap){
             fromP.incX()
         }
         field[fromP.x][fromP.y] +=1
+        arrMax = max(arrMax,field[fromP.x][fromP.y])
     }
 }
 var overlaps = 0
@@ -95,5 +96,4 @@ for (i in field){
     println()
 }
 
-// tired --> resuming tomorrow
 print("\nNumber of points where at least two lines overlap are $overlaps")
